@@ -1,0 +1,22 @@
+/* Copyright (C) [2024] [Readeon]
+ This code is for viewing purposes only. Modification, redistribution, and commercial use are strictly prohibited 
+ */
+import { BaseStorage, createStorage, StorageType } from '@src/shared/storages/base';
+
+type PostsIsLoadingStorage = BaseStorage<boolean> & {
+  setLoading: (isLoading: boolean) => Promise<void>;
+};
+
+const storage = createStorage<boolean>('posts-is-loading-storage-key', false, {
+  storageType: StorageType.Local,
+  liveUpdate: true,
+});
+
+const postsIsLoadingStorage: PostsIsLoadingStorage = {
+  ...storage,
+  setLoading: async (isLoading: boolean) => {
+    await storage.set(isLoading);
+  },
+};
+
+export default postsIsLoadingStorage;
