@@ -1,6 +1,6 @@
 <div align="center" style="padding-top: 25px">
 <img src="https://c14.patreon.com/quxga_Patreon_Symbol_6fff9723d3.png" width="150px" alt="logo"/>
-<h1>Readeon Chrome Extension</h1>
+<h1>Readeon Extension</h1>
 </div>
 
 ## Table of Contents
