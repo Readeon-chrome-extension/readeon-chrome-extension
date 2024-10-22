@@ -50,4 +50,4 @@
 4. Select - `manifest.json` from `dist` folder
 
 ## License
-This code is licensed for viewing purposes only. Any modification, redistribution, or commercial use is strictly prohibited. See the [LICENSE](LICENSE) file for more details.
+This code is licensed for viewing purposes only. Any modification, redistribution, or commercial use is strictly prohibited. See the [LICENSE]([LICENSE](https://github.com/Readeon-chrome-extension/readeon-chrome-extension/tree/main?tab=License-1-ov-file#)) file for more details.
