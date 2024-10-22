@@ -51,3 +51,27 @@
 
 ## License
 This code is licensed for viewing purposes only. Any modification, redistribution, or commercial use is strictly prohibited. See the [LICENSE](https://github.com/Readeon-chrome-extension/readeon-chrome-extension/tree/main?tab=License-1-ov-file#) file for more details.
+
+## Readeon Requested Permissions and Their Reasons
+
+### Storage Justification
+
+Used the storage permission to save Patreon authors' posts locally on your device. This allows me to display the content in a full-screen mode as part of the enhanced reading experience provided by the extension. The stored data is not shared and remains local to your browser.
+
+### WebRequest Justification
+Used the webRequest permission to monitor network activity related to the pages you visit on Patreon. This helps me detect when a new request is made, such as when a Patreon post is being loaded. Using this information, we can display a loading state, letting you know that content is being retrieved. This improves the extension's responsiveness, ensuring you have a more seamless experience when interacting with Patreon.
+### Tabs Justification
+Used the tabs permission to detect when you are on a Patreon tab and enhance your experience accordingly. If you are not on Patreon, the extension can automatically open a new tab for you to navigate to Patreon. This ensures that you always have access to the features provided by our extension without manually switching tabs
+### Management Justification
+Used the management permission to track the state of the extension—whether it is currently enabled or disabled in your browser. This allows us to ensure that the extension’s features are only active when you want them to be, and it helps in managing the extension’s functionality based on your settings.
+### WebNavigation Justification
+Used the webNavigation permission to detect when you navigate to Patreon or related pages. By tracking this navigation, the extension can recognize when you are on a supported site and ensure that the extension's features are activated at the right time. This makes the extension more efficient, enabling it to enhance your reading experience by applying its functionality when needed.
+### Scripting Justification
+Used the scripting permission to inject custom scripts into Patreon pages. These scripts modify the content and layout of the page to provide an enhanced reading experience. For example, the scripts may restructure the page to display posts in a more reader-friendly format, add functionality like full-screen mode, or customize the appearance of posts based on your preferences.
+### Cookies Jusitification
+The cookies permission is used to maintain your session data on Patreon and Readeon, ensuring that you stay logged in and your preferences are remembered while using the extension. This helps in providing a seamless and consistent experience when interacting with the websites.
+### Host Permissions Justification
+Requested host permissions for the following domains to provide essential functionality for the Readeon extension:
+https://www.patreon.com/*
+This permission allows the extension to interact with Patreon, enhancing the user experience by modifying page layouts, injecting scripts, and enabling full-screen reading mode.
+https://www.readeon.com/*
