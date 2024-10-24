@@ -13,10 +13,13 @@ import WarningContainer from '@root/src/shared/components/full-screen/warningCon
 import creatorProfileStorage from '@root/src/shared/storages/creatorProfileStorage';
 import CreatorProfile from '@root/src/shared/components/full-screen/creator-profile';
 import { Modal } from '@root/src/shared/components/modal/Modal';
+import { getKey, getPostKeyByUrl } from '@root/src/shared/utils/posts';
+import matcherStorage from '@root/src/shared/storages/matcherStorage';
 
 const OverlayCreator = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const creatorProfile = useStorage(creatorProfileStorage);
+  const creatorProfileData = useStorage(creatorProfileStorage);
+  const matcher = useStorage(matcherStorage);
   const [openTipModal, setOpenTipModal] = React.useState<boolean>(false);
   let buttonClick = 0;
   const startTime = Date.now();
@@ -33,6 +36,12 @@ const OverlayCreator = () => {
       }
     }
   };
+  const creatorProfile = React.useMemo(() => {
+    const key = matcher === 'creatorPost' ? getKey(window?.location?.href) : getPostKeyByUrl(window?.location?.href);
+    if (creatorProfileData) {
+      return creatorProfileData[key];
+    }
+  }, [creatorProfileData]);
   const handleChromeMessage = (request: any) => {
     if (request?.message === 'overlay-creator-view') {
       handleOpen();

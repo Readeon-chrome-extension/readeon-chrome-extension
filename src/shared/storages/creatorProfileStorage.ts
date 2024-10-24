@@ -5,19 +5,22 @@
 import { BaseStorage, createStorage, StorageType } from '@src/shared/storages/base';
 import { UserProfile } from './posts/postsStorage';
 
-type CreatorProfileStorage = BaseStorage<UserProfile> & {
-  add: (creatorProfile: UserProfile) => Promise<void>;
+interface createProfile {
+  [key: string]: UserProfile;
+}
+type CreatorProfileStorage = BaseStorage<createProfile> & {
+  add: (creatorProfile: UserProfile, key: string) => Promise<void>;
 };
 
-const storage = createStorage<UserProfile>('creator-profile-storage-key', null, {
+const storage = createStorage<createProfile>('creator-profile-storage-key', null, {
   storageType: StorageType.Local,
   liveUpdate: true,
 });
 
 const creatorProfileStorage: CreatorProfileStorage = {
   ...storage,
-  add: async creatorProfile => {
-    await storage.set(creatorProfile);
+  add: async (creatorProfile, key) => {
+    await storage.set(prev => ({ ...prev, [key]: creatorProfile }));
   },
 };
 

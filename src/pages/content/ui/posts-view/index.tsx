@@ -251,6 +251,8 @@ refreshOnUpdate('pages/content');
     } else {
       if (targetElement?.parentElement && !targetElement?.parentElement?.parentElement?.contains(root)) {
         targetElement?.parentElement?.insertAdjacentElement('beforebegin', root);
+        console.log('targetElement', { targetElement });
+
         // Hide the original element
         removeSubscriptionNode();
         targetElement?.parentElement?.setAttribute('style', 'display: none');
@@ -378,7 +380,7 @@ refreshOnUpdate('pages/content');
     }
 
     const isCreatorPublicPage = document.querySelector(creatorPublicPage);
-    if (creatorName?.parentElement) {
+    if (creatorName?.parentElement && !window.location.pathname.includes('messages')) {
       !isCreatorPublicPage &&
         creatorName?.parentElement?.setAttribute('style', 'flex-direction: column;align-items:center;display:flex');
       const btn = `<button class="bookmark_modal_button" id="readeon-overlay-open-btn" style="padding:0;width:190px;font-size:14px;margin-top:12px;font-weight:700;min-height:40px;max-height:40px;${isRestrictedPageHandle() ? 'display:none' : 'display:inline-flex'}">Open Readeon Overlay</button>`;
