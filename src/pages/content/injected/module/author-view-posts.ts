@@ -63,7 +63,7 @@ export const createPostsAuthors = async (postData: Record<string, any>, url: str
     });
 
     if (user) {
-      await creatorProfileStorage.add(user);
+      await creatorProfileStorage.add(user, postsViewKey);
     }
     // Assuming postsStorage is a module that handles storage operations and it's already imported
     if (imagesAdded?.length > 0 && isFeaturePost) {

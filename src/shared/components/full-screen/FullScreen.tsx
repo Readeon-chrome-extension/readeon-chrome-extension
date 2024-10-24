@@ -521,7 +521,15 @@ const FullScreen: FC<FullScreenProps> = ({
         {postData ? (
           <LoadingOverlay
             active={isLoading}
-            text={loadingTip}
+            text={
+              <>
+                <span style={{ display: 'block' }}>
+                  While posts are loading, other Readeon buttons may not be clickable. Refresh the page if you must.
+                </span>
+                <br />
+                {loadingTip}
+              </>
+            }
             spinner={isLoading}
             styles={{
               wrapper: base => ({

@@ -125,6 +125,7 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
       console.log('Stopping execution after 5 seconds');
       return;
     }
+    console.log('container', container, config.pages.posts.readeonPostContainer);
     if (!container?.length) {
       setTimeout(() => getPostContainer(startTime), 300);
       return;

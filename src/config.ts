@@ -97,7 +97,7 @@ export default {
       restoreAudioSelector: '[elevation="subtle"] > div',
       upgradeSelector: '[data-tag="join-button"]',
       restoreUpgradeSelector: '[width="fluid"]',
-      subscriptionNodeSelector: '[spacing="separated"][data-cardlayout-edgeless]',
+      subscriptionNodeSelector: 'div[data-tag="free-membership-upgrade-cta"]',
       singlePostAuthorKey: '[span="2"] a[href]',
       relatedPostSelector: '[span="2"] h3',
       relatedPostText: 'Related posts',

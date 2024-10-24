@@ -253,12 +253,12 @@ export const restorePostActionsRecentView = (authorKey: string, itemIndex: numbe
 export const removeSubscriptionNode = async () => {
   const singlePost = await singlePostStorage.get();
   const isAuthorJoinPage = document.querySelector('[data-tag="join-for-free-button"]');
-  const isSubscriptionNode = document?.querySelector(`${config.pages.posts.subscriptionNodeSelector} > div`);
+  const isSubscriptionNode = document?.querySelector(`${config.pages.posts.subscriptionNodeSelector}`);
 
   if (isAuthorJoinPage || (singlePost?.href === window?.location?.pathname && singlePost?.isSinglePostView)) return;
 
-  if (isSubscriptionNode) {
-    isSubscriptionNode?.remove();
+  if (isSubscriptionNode?.parentElement) {
+    isSubscriptionNode?.parentElement?.remove();
   }
 };
 export const handleScrollUp = () => {
