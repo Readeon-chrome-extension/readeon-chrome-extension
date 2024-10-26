@@ -180,13 +180,14 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
   const selectedPostContent = () => {
     if (!pageSpecificPostsData?.length) return [];
 
-    return (
+    const filteredPosts =
       pageSpecificPostsData.filter(
         post =>
           post.authorKeyLowerCase === authorKey?.toLowerCase() &&
           selectedIds[authorKey?.toLowerCase()]?.includes(String(post?.id)),
-      ) || []
-    );
+      ) || [];
+
+    return filteredPosts.slice().reverse();
   };
 
   const getUnlockedPost = (postContainer: Element[]) => {
