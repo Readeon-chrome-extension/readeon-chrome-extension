@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
 import styled from '@emotion/styled';
 
-interface ModalProps {
+interface ModalProps extends ReactModal.Props {
   isOpen: boolean;
   onClose?: () => void;
   onOk?: () => void;
@@ -64,6 +64,7 @@ export const Modal: React.FC<ModalProps> = ({
   closeIcon = false,
   style,
   maskClosable = false,
+  ...rest
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -84,7 +85,8 @@ export const Modal: React.FC<ModalProps> = ({
       preventScroll
       shouldCloseOnOverlayClick={maskClosable}
       parentSelector={() => document.querySelector('#renderPageContentWrapper')}
-      shouldCloseOnEsc={true}>
+      shouldCloseOnEsc={true}
+      {...rest}>
       {closeIcon && <CloseIcon size={35} onClick={onClose} />}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
         <h2 style={{ textAlign: 'center', margin: 0 }}>{title}</h2>

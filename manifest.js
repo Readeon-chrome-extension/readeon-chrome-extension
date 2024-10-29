@@ -36,6 +36,12 @@ const manifest = {
     48: 'ReadeonExtensionLogo-new.png',
     128: 'ReadeonExtensionLogo-new.png',
   },
+  options_page: 'src/pages/options/index.html',
+  browser_specific_settings: {
+    gecko: {
+      id: '{d318d878-c4d7-4e91-8389-029cf5d11d27}', // Use your generated UUID here
+    },
+  },
   content_security_policy: {
     extension_pages:
       "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://diplomatic-adelina-readeon-f63fb2a8.koyeb.app/ https://www.readeon.com/; object-src 'self';",
