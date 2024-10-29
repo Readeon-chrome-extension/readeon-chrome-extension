@@ -39,7 +39,7 @@ const manifest = {
   options_page: 'src/pages/options/index.html',
   browser_specific_settings: {
     gecko: {
-      id: '{d318d878-c4d7-4e91-8389-029cf5d11d27}', // Use your generated UUID here
+      id: '{5667306a-8a20-499f-8972-5bf05a8cfbe7}', // Use your generated UUID here
     },
   },
   content_security_policy: {
