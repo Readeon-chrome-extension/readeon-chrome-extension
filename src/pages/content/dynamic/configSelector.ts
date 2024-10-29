@@ -18,7 +18,7 @@ const getRootSelectorValue = () => {
   if (isCreatorPublicPage || isUnjoinedAuthorPage) {
     return '[data-tag="all-posts-layout"]';
   } else {
-    return 'div[spacing="separated"][data-cardlayout-edgeless].ganXF';
+    return 'div[spacing="separated"][data-cardlayout-edgeless].kPiFue';
   }
 };
 const getPostRootSelector = () => {
@@ -27,7 +27,7 @@ const getPostRootSelector = () => {
   if (isCreatorPublicPage || isUnjoinedAuthorPage) {
     return '[data-tag="all-posts-layout"] > div';
   } else {
-    return '[spacing="separated"][data-cardlayout-edgeless].ganXF > div';
+    return '[spacing="separated"][data-cardlayout-edgeless].kPiFue > div';
   }
 };
 const getLoadMoreSelector = () => {
