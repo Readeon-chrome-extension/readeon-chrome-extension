@@ -8,7 +8,7 @@ import refreshOnUpdate from 'virtual:reload-on-update-in-view';
 refreshOnUpdate('pages/content/banner/banner-script');
 
 const getBannerData = async () => {
-  const response = await fetch('https://www.readeon.com/api/banner');
+  const response = await fetch('https://www.readeon.com/api/banner?ext=Readeon');
   const data = await response?.json();
   return data;
 };
@@ -27,8 +27,9 @@ const getBannerData = async () => {
   if (exitBanner?.style?.display === 'block') return;
 
   // Create the banner element
+  const isScheduleonBanner = document.querySelector('#custom-banner-scheduleon');
   const banner = `
-    <div id='custom-banner' style='border: 2px solid var(--global-border-muted-default);overflow-wrap: anywhere; position:fixed;top:16px;left:5%;width:90%;padding:10px;background-color:var(--global-bg-base-default);color:var(--global-content-regular-default);text-align:center;z-index:1300;display:block;border-radius:6px;'>
+    <div id='custom-banner' style='border: 2px solid var(--global-border-muted-default);overflow-wrap: anywhere; position:fixed;top:${isScheduleonBanner ? '32%' : '16px'};left:5%;width:90%;padding:10px;background-color:var(--global-bg-base-default);color:var(--global-content-regular-default);text-align:center;z-index:1300;display:block;border-radius:6px;'>
    <span id='banner-close-icon' style='display:block;float:right;margin-right:8px;font-size:22px;cursor:pointer;color:var(--global-content-regular-default);'>&#x2715;</span>
    <div>
     <h1>${bannerData?.title ?? ''}</h1>

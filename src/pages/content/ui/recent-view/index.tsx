@@ -238,7 +238,7 @@ const injectFullScreen = async (element: Element, index: number, authorKey: stri
   const url = title?.querySelector('a')?.getAttribute('href');
 
   if (title && url) {
-    title?.setAttribute('style', 'display:flex;width:100%;justify-content:space-between;');
+    title?.parentElement?.setAttribute('style', 'display:flex;width:100%;justify-content:space-between;');
     const postId = getPostId(url);
     const titleEle = element?.querySelector('[data-tag="post-title"] > a');
     savePostClickOnTitle(postId, titleEle, authorKey?.toLowerCase(), 'recent');
