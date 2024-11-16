@@ -8,7 +8,6 @@ import { Modal } from '@root/src/shared/components/modal/Modal';
 import Select, { OptionsType } from '@root/src/shared/components/select-component/select';
 import useStorage from '@root/src/shared/hooks/useStorage';
 import extEnableStorage from '@root/src/shared/storages/extEnableStorage';
-import isEnableStorage from '@root/src/shared/storages/isEnableStorage';
 import matcherStorage from '@root/src/shared/storages/matcherStorage';
 import { restrictedKeywords } from '@root/src/shared/utils/posts';
 
@@ -210,9 +209,6 @@ const ReportPopUp = () => {
     setIsModalOpen(true);
   };
 
-  const handleEnableClick = () => {
-    isEnableStorage.toggle().then();
-  };
   return (
     <>
       <Toaster richColors position="top-right" expand />
@@ -363,10 +359,6 @@ const ReportPopUp = () => {
                   />
                 </>
               )}
-              {((matcher === 'creatorPost' || matcher === 'posts') && !isRestrictedPageHandle()) ||
-              window.location.href === 'https://www.patreon.com/home' ? (
-                <Button id="patreon-overlay-open-btn" active onClick={handleEnableClick} text="Readeon View" />
-              ) : null}
             </div>
           }
         />

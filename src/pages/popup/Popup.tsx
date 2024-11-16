@@ -14,7 +14,6 @@ import { useState, useEffect } from 'react';
 import matcherStorage from '@root/src/shared/storages/matcherStorage';
 import extEnableStorage from '@root/src/shared/storages/extEnableStorage';
 import { restrictedKeywords } from '@root/src/shared/utils/posts';
-import isEnableStorage from '@root/src/shared/storages/isEnableStorage';
 import userDataStorage from '@root/src/shared/storages/user/user-storage';
 
 const Popup = () => {
@@ -65,9 +64,6 @@ const Popup = () => {
     });
   }, []);
 
-  const handleEnableClick = () => {
-    isEnableStorage.toggle().then();
-  };
   return (
     <div
       className="App"
@@ -168,16 +164,6 @@ const Popup = () => {
                       </button>
                     </>
                   )}
-                  {((matcher === 'creatorPost' || matcher === 'posts') && showOverlayBtn) ||
-                  currentUrl === 'https://www.patreon.com/home' ? (
-                    <button
-                      className="exe-pop-up-btn"
-                      id="patreon-chapter-view-btn"
-                      onClick={handleEnableClick}
-                      style={{ padding: 0, width: '195px', fontSize: '12px' }}>
-                      Readeon View
-                    </button>
-                  ) : null}
                 </div>
               </div>
             </>
