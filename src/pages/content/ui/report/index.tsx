@@ -3,8 +3,14 @@
  */
 
 import styled from '@emotion/styled';
+import { Button } from '@root/src/shared/components/button/Button';
 import { Modal } from '@root/src/shared/components/modal/Modal';
 import Select, { OptionsType } from '@root/src/shared/components/select-component/select';
+import useStorage from '@root/src/shared/hooks/useStorage';
+import extEnableStorage from '@root/src/shared/storages/extEnableStorage';
+import isEnableStorage from '@root/src/shared/storages/isEnableStorage';
+import matcherStorage from '@root/src/shared/storages/matcherStorage';
+import { restrictedKeywords } from '@root/src/shared/utils/posts';
 
 import axios from 'axios';
 import { CSSProperties, useEffect, useState } from 'react';
@@ -55,7 +61,12 @@ export const SelectWrapper = styled.div`
   flex-direction: column;
   gap: 8px;
 `;
-
+const isRestrictedPageHandle = () => {
+  const currentPath = window.location.pathname;
+  const pathParts = currentPath.split('/');
+  const lastPart = pathParts[pathParts.length - 1].toLowerCase();
+  return restrictedKeywords.includes(lastPart);
+};
 const ReportPopUp = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -63,11 +74,18 @@ const ReportPopUp = () => {
   const [elementOptions, setElementOptions] = useState<OptionsType[]>([]);
   const [isConfirmation, setConfirmation] = useState<boolean>(false);
   const [isCancel, setIsCancel] = useState<boolean>(false);
+  const [controlModal, setControlModal] = useState<boolean>(false);
+  const matcher = useStorage(matcherStorage);
   const handleClose = async () => {
     if (formData) {
       setIsCancel(true);
     } else {
       setIsModalOpen(false);
+    }
+  };
+  const handleMessageEvent = event => {
+    if (event.data.type === 'Open_Readeon_Control') {
+      setControlModal(true);
     }
   };
 
@@ -78,17 +96,12 @@ const ReportPopUp = () => {
       }
     };
     chrome?.runtime?.onMessage?.addListener(handleChromeMessage);
-    const ReportBtnEle = document?.getElementById('patreon-report-btn');
-    if (ReportBtnEle) {
-      const openModal = () => setIsModalOpen(true);
-      ReportBtnEle.addEventListener('click', openModal);
-
-      // Cleanup the event listener on component unmount
-      return () => {
-        ReportBtnEle.removeEventListener('click', openModal);
-        chrome?.runtime?.onMessage?.removeListener(handleChromeMessage);
-      };
-    }
+    // const ReportBtnEle = document?.getElementById('patreon-report-btn');
+    window.addEventListener('message', handleMessageEvent);
+    return () => {
+      // ReportBtnEle.removeEventListener('click', openModal);
+      chrome?.runtime?.onMessage?.removeListener(handleChromeMessage);
+    };
   }, []);
 
   const handlePageChange = (selectedOption: string) => {
@@ -184,6 +197,21 @@ const ReportPopUp = () => {
   };
   const handleCloseModelCancel = () => {
     setIsCancel(false);
+  };
+  const handleRefresh = () => {
+    window?.location?.reload();
+  };
+  const handleOffExt = async () => {
+    await extEnableStorage.toggle();
+    window?.location?.reload();
+  };
+  const handleReportedProblem = () => {
+    setControlModal(false);
+    setIsModalOpen(true);
+  };
+
+  const handleEnableClick = () => {
+    isEnableStorage.toggle().then();
   };
   return (
     <>
@@ -292,6 +320,53 @@ const ReportPopUp = () => {
           body={
             <div>
               <p>Are you sure you want to cancel?</p>
+            </div>
+          }
+        />
+      )}
+      {controlModal && (
+        <Modal
+          portalClassName="readeon-control-portal"
+          isOpen={controlModal}
+          title="Readeon Controls"
+          footer={false}
+          closeIcon
+          onClose={() => {
+            setControlModal(false);
+          }}
+          body={
+            <div style={{ width: '59%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <Button id="patreon-refresh-btn" active onClick={handleRefresh} text="Readeon Issue? Click to Refresh" />
+
+              <Button
+                active
+                id="patreon-feedback-btn"
+                text="Give Readeon Feedback"
+                onClick={() => {
+                  window.postMessage({ type: 'Open_Readeon_Feedback' });
+                  setControlModal(false);
+                }}
+              />
+              <Button id="readeon-off-btn" active onClick={handleOffExt} text="Turn Readeon Off" />
+
+              <Button id="patreon-report-btn" active onClick={handleReportedProblem} text="Report Readeon Problem" />
+              {(matcher === 'creatorPost' || matcher === 'posts') && !isRestrictedPageHandle() && (
+                <>
+                  <Button
+                    id="patreon-overlay-open-btn"
+                    active
+                    onClick={() => {
+                      window.postMessage({ type: 'Open_Readeon_Overlay' });
+                      setControlModal(false);
+                    }}
+                    text="Open Readeon Overlay"
+                  />
+                </>
+              )}
+              {((matcher === 'creatorPost' || matcher === 'posts') && !isRestrictedPageHandle()) ||
+              window.location.href === 'https://www.patreon.com/home' ? (
+                <Button id="patreon-overlay-open-btn" active onClick={handleEnableClick} text="Readeon View" />
+              ) : null}
             </div>
           }
         />

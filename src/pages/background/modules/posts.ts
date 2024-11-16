@@ -23,31 +23,33 @@ class Posts {
     );
   }
 
-  handleBeforeRequestListener(details: chrome.webRequest.WebRequestBodyDetails) {
+  handleBeforeRequestListener(details: any) {
     if (details.tabId === -1 || details.type === 'other') {
       return; // If the request is not from a tab, exit the function
     }
-    const { url, initiator } = details;
+    const { url, initiator, originUrl } = details;
+
     const isFeaturePostUrl =
       url.startsWith('https://www.patreon.com/api/campaigns') && url.includes('?include=featured_post');
     if (
       (url.startsWith('https://www.patreon.com/api/posts?include=campaign') || isFeaturePostUrl) &&
-      initiator.startsWith('https://www.patreon.com')
+      (initiator?.startsWith('https://www.patreon.com') || originUrl?.startsWith('https://www.patreon.com'))
     ) {
       postsIsLoadingStorage.setLoading(true).then();
     }
   }
 
-  async handleWebRequestListener(details: chrome.webRequest.WebResponseCacheDetails): Promise<void> {
+  async handleWebRequestListener(details: any): Promise<void> {
     if (details.tabId === -1 || details.type === 'other') {
       return; // If the request is not from a tab, exit the function
     }
-    const { url, method, initiator } = details;
+    const { url, method, initiator, originUrl } = details;
+
     const isFeaturePostUrl =
       url.startsWith('https://www.patreon.com/api/campaigns') && url.includes('?include=featured_post');
     if (
       (url.startsWith('https://www.patreon.com/api/posts?include=campaign') || isFeaturePostUrl) &&
-      initiator.startsWith('https://www.patreon.com')
+      (initiator?.startsWith('https://www.patreon.com') || originUrl?.startsWith('https://www.patreon.com'))
     ) {
       //Added the window reload to get the updated post details
       if (isFeaturePostUrl && (method === 'POST' || method === 'DELETE')) {

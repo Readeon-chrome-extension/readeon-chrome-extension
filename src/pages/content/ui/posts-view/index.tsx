@@ -289,6 +289,8 @@ refreshOnUpdate('pages/content');
 
     readeonControl?.addEventListener('click', async () => {
       chrome.runtime.sendMessage({ action: 'Open_PopUp' });
+      //firefox to open the readeon control
+      window.postMessage({ type: 'Open_Readeon_Control' }, '*');
     });
     readeonSupport.addEventListener('click', () => {
       window.open('https://www.patreon.com/DemocraticDeveloper', '_self');
