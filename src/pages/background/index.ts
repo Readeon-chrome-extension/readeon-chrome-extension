@@ -145,6 +145,9 @@ chrome.runtime.onMessage.addListener(request => {
   if (request.action === 'Reload_Patreon') {
     reloadPatreon();
   }
+  if (request.action === 'feedback_modal') {
+    sendMessage(request.action);
+  }
 });
 
 function isPatreonUrl(url: string) {
@@ -233,3 +236,10 @@ chrome.management.onDisabled.addListener(() => {
   reloadPatreon('https://www.readeon.com');
 });
 console.log('background loaded');
+const sendMessage = (message: string) => {
+  chrome?.tabs?.query({ currentWindow: true, active: true }, function (tabs) {
+    const activeTab = tabs[0];
+
+    chrome?.tabs?.sendMessage(activeTab?.id, { message });
+  });
+};

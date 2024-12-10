@@ -208,7 +208,11 @@ const ReportPopUp = () => {
     setControlModal(false);
     setIsModalOpen(true);
   };
-
+  const handleClick = async () => {
+    const message = 'feedback_modal';
+    chrome.runtime.sendMessage({ action: message });
+    setControlModal(false);
+  };
   return (
     <>
       <Toaster richColors position="top-right" expand />
@@ -334,15 +338,7 @@ const ReportPopUp = () => {
             <div style={{ width: '59%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <Button id="patreon-refresh-btn" active onClick={handleRefresh} text="Readeon Issue? Click to Refresh" />
 
-              <Button
-                active
-                id="patreon-feedback-btn"
-                text="Give Readeon Feedback"
-                onClick={() => {
-                  window.postMessage({ type: 'Open_Readeon_Feedback' });
-                  setControlModal(false);
-                }}
-              />
+              <Button active id="patreon-feedback-btn" text="Give Readeon Feedback" onClick={handleClick} />
               <Button id="readeon-off-btn" active onClick={handleOffExt} text="Turn Readeon Off" />
 
               <Button id="patreon-report-btn" active onClick={handleReportedProblem} text="Report Readeon Problem" />
