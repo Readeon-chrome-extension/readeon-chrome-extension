@@ -488,6 +488,7 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
       console.log('error', { error });
     }
   };
+  const isInValidAuthor = useMemo(() => !window?.location?.href.startsWith('https://www.patreon.com/user'), []);
   return (
     <>
       <FlexContainer>
@@ -516,7 +517,11 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
                 disabled={allLocked}
                 data-tooltip-id="all-post-selection"
                 data-tooltip-content={
-                  allLocked ? 'All currently loaded posts on the page are locked and cannot be selected.' : ''
+                  isInValidAuthor
+                    ? 'Readeon cannot download posts for this creator due to Patreon restrictions.'
+                    : allLocked
+                      ? 'All currently loaded posts on the page are locked and cannot be selected.'
+                      : ''
                 }
               />
             </div>

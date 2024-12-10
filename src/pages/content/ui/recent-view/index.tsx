@@ -207,7 +207,7 @@ refreshOnUpdate('pages/content');
                   width:100%;
                   font-size:14px;
                 ">
-                Readeon does not support "Readeon View” for this component.
+                Readeon does not support "Readeon View” for this component. If “Full Screen” button is not working as intended, then scroll all the way down the home page then back up and try using the button again
               </div>`;
       element?.insertAdjacentHTML('beforeend', warningEle);
       const rootAuthorElement = element?.closest(config.pages.recentPosts.rootAuthorSelector);
