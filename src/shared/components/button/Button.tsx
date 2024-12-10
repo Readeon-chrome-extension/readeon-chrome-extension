@@ -28,7 +28,7 @@ const StyledButton = styled.button<ButtonProps>`
     ${({ active }) => (active ? 'transparent' : 'var(--global-border-action-default)')};
   min-height: 40px;
   max-height: 40px;
-  padding: 0 18px 0 20px;
+  padding: 0 12px;
   border-radius: var(--global-radius-md);
   outline-offset: 0;
   line-height: var(--component-lineHeights-button);
@@ -36,6 +36,10 @@ const StyledButton = styled.button<ButtonProps>`
   white-space: unset;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+
+  @media (min-width: 768px) {
+    padding: 0 18px 0 20px;
+  }
 `;
 
 export const Button: FC<ButtonProps> = ({ onClick, text, active, disabled, className, tooltip, ...rest }) => {

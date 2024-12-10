@@ -80,7 +80,12 @@ const WrapperPerPage = styled.div`
 const PerPageItemContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row-reverse;
+  align-items: flex-start;
+  flex-direction: column;
+  @media (min-width: 768px) {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
 `;
 const sizeOptions = [
   { label: '5', value: 5 },
@@ -335,8 +340,12 @@ export const PostsView: FC<PostViewProps> = ({ isView }) => {
   };
 
   return (
-    <div className="per-chapter-view">
-      <PerPageItemContainer style={{ justifyContent: isEnable ? 'space-between' : 'center' }}>
+    <div className="per-chapter-view" style={{ width: '100%' }}>
+      <PerPageItemContainer
+        style={{
+          justifyContent: isEnable ? 'space-between' : 'center',
+          alignItems: isEnable ? 'flex-start' : 'center',
+        }}>
         <TopButtons isView={isView} />
         {isEnable && (
           <WrapperPerPage>
@@ -369,7 +378,7 @@ export const PostsView: FC<PostViewProps> = ({ isView }) => {
           </span>
         </div>
       ) : null}
-      {!window?.location?.href.startsWith('https://www.patreon.com/user') && paginatedPosts?.length > 0 && isEnable && (
+      {paginatedPosts?.length > 0 && isEnable && (
         <>
           {!postIsLoading ? (
             <PostSelectionActionButton

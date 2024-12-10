@@ -45,10 +45,16 @@ interface PostSelectionActionType {
 
 const FlexContainer = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
+  width: 100%;
   padding: 12px 0;
   justify-content: space-between;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+  }
 `;
 
 // const BASE_URL = 'http://localhost:3000/api';
@@ -488,6 +494,7 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
       console.log('error', { error });
     }
   };
+  const isInValidAuthor = useMemo(() => !window?.location?.href.startsWith('https://www.patreon.com/user'), []);
   return (
     <>
       <FlexContainer>
@@ -496,6 +503,7 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
+            width: '100%',
             whiteSpace: 'nowrap',
             textOverflow: 'ellipsis',
             overflow: 'hidden',
@@ -516,7 +524,11 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
                 disabled={allLocked}
                 data-tooltip-id="all-post-selection"
                 data-tooltip-content={
-                  allLocked ? 'All currently loaded posts on the page are locked and cannot be selected.' : ''
+                  isInValidAuthor
+                    ? 'Readeon cannot download posts for this creator due to Patreon restrictions.'
+                    : allLocked
+                      ? 'All currently loaded posts on the page are locked and cannot be selected.'
+                      : ''
                 }
               />
             </div>

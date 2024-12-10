@@ -39,7 +39,7 @@ const isPostChapter = (title: string) => {
 };
 
 const PerChapterView = styled.div`
-  /* Add your styles here */
+  width: 100%;
 `;
 
 const Header = styled.div`
@@ -71,13 +71,18 @@ interface ItemProps {
 }
 
 const Item = styled.div`
-  padding: 5px 0;
+  padding: 16px 0;
   // &:not(:last-child) {
   //   border-bottom: 1px solid #3f3f3f;
   // }
+  width: 100%;
+  @media (min-width: 768px) {
+    padding: 24px 0;
+  }
 `;
 
 const ItemTitle = styled.a`
+  width: 100%;
   cursor: pointer;
   display: flex;
   gap: 8px;
@@ -205,7 +210,10 @@ export const PerChapter: FC<PerChapterProps> = ({
           )}
         </LoaderWrapper>
       )}
-      <div id="readeon-post-list-container" data-author-key={view === 'recent-view' ? authorKey : null}>
+      <div
+        id="readeon-post-list-container"
+        style={{ width: '100%' }}
+        data-author-key={view === 'recent-view' ? authorKey : null}>
         {!isLoading &&
           posts?.map((post, index) => (
             <Item key={post.id} style={{ borderBottom: index !== posts.length - 1 ? '1px solid #3f3f3f' : 'unset' }}>
@@ -216,58 +224,61 @@ export const PerChapter: FC<PerChapterProps> = ({
                   handleChapterClick(post.id);
                 }}
                 href="#">
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  {!window?.location?.href.startsWith('https://www.patreon.com/user') ? (
-                    post?.isView ? (
-                      hasClicked[getStorageKey(post.authorKeyLowerCase, view)] || showCheckboxes ? (
-                        <input
+                <div className="post-view-row" style={{ alignItems: 'center', gap: '6px', width: '75%' }}>
+                  <div className="post-icon-wrapper">
+                    {!window?.location?.href.startsWith('https://www.patreon.com/user') ? (
+                      post?.isView ? (
+                        hasClicked[getStorageKey(post.authorKeyLowerCase, view)] || showCheckboxes ? (
+                          <input
+                            style={{
+                              width: '18px',
+                              height: '18px',
+                              cursor: 'pointer',
+                            }}
+                            data-post-id={post?.id}
+                            checked={selectedIds?.[post?.authorKeyLowerCase]?.includes(String(post?.id)) || false}
+                            type="checkbox"
+                            className="post-selection-checkbox"
+                            onChange={e => {
+                              e.stopPropagation();
+                              handleCheckboxChange(post);
+                            }}
+                            onClick={e => e.stopPropagation()}
+                          />
+                        ) : null
+                      ) : (
+                        <LockKeyhole
+                          onClick={e => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                          }}
+                          className="readeon-locked-post"
                           style={{
                             width: '18px',
                             height: '18px',
-                            cursor: 'pointer',
+                            cursor: 'default',
+                            outline: 'none',
+                            color: 'var(--global-content-regular-default)',
                           }}
-                          data-post-id={post?.id}
-                          checked={selectedIds?.[post?.authorKeyLowerCase]?.includes(String(post?.id)) || false}
-                          type="checkbox"
-                          className="post-selection-checkbox"
-                          onChange={e => {
-                            e.stopPropagation();
-                            handleCheckboxChange(post);
-                          }}
-                          onClick={e => e.stopPropagation()}
+                          data-tooltip-id="my-tooltip-title"
+                          data-tooltip-content={'This post is locked and cannot be downloaded'}
                         />
-                      ) : null
-                    ) : (
-                      <LockKeyhole
-                        onClick={e => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                        }}
-                        className="readeon-locked-post"
-                        style={{
-                          width: '18px',
-                          height: '18px',
-                          cursor: 'default',
-                          outline: 'none',
-                          color: 'var(--global-content-regular-default)',
-                        }}
-                        data-tooltip-id="my-tooltip-title"
-                        data-tooltip-content={'This post is locked and cannot be downloaded'}
-                      />
-                    )
-                  ) : null}
-                  {lastReadPost?.id === post?.id &&
-                    !window?.location?.href.startsWith('https://www.patreon.com/user?u') && (
-                      <span className="last-read-icon">
-                        <ArrowBigRight />
-                      </span>
-                    )}
+                      )
+                    ) : null}
+                    {lastReadPost?.id === post?.id &&
+                      !window?.location?.href.startsWith('https://www.patreon.com/user?u') && (
+                        <span className="last-read-icon">
+                          <ArrowBigRight />
+                        </span>
+                      )}
+                  </div>
                   <div
+                    style={{ width: '100%' }}
                     data-tooltip-id={`my-tooltip-title`}
                     data-tooltip-content={post?.title?.length >= 51 ? post?.title : ''}>
                     <StyledTitle
                       isChapter={!isEnableShowOnlyChapters || !showOnlyChapters || isPostChapter(post.title)}
-                      style={{ width: post?.title?.length >= 51 ? '450px' : 'fit-content' }}
+                      // style={{ width: post?.title?.length >= 51 ? '450px' : 'fit-content' }}
                       className={visitedPosts.includes(post.id) ? 'visited' : ''}>
                       {post?.title}
                     </StyledTitle>

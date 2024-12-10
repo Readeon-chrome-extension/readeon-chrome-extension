@@ -109,7 +109,7 @@ const OverlayCreator = () => {
             data-tooltip-id="my-tooltip">
             <X size={35} />
           </div>
-          <div style={{ width: '80%' }} className="overlay-wrapper">
+          <div className="overlay-wrapper">
             <CreatorProfile user={creatorProfile} />
             <WarningContainer text="Overlay will show posts depending on the chosen filters. Exit the overlay to change the filters." />
             <PostsView isView="Overlay" />

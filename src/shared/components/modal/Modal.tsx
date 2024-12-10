@@ -36,6 +36,7 @@ const customStyles = {
     borderRadius: 'var(--global-radius-lg)',
     border: 'none',
     top: '50%',
+    minWidth: '320px',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     height: 'fit-content',

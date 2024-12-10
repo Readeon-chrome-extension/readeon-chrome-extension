@@ -27,7 +27,10 @@ const getManifestWithCacheBurst = (): Promise<{ default: chrome.runtime.Manifest
   return import(withCacheBurst(manifestFile));
 };
 
-export default function makeManifest(config?: { getCacheInvalidationKey?: () => string }): PluginOption {
+export default function makeManifest(
+  config?: { getCacheInvalidationKey?: () => string },
+  isDev?: boolean,
+): PluginOption {
   function makeManifest(manifest: chrome.runtime.ManifestV3, to: string, cacheKey?: string) {
     if (!fs.existsSync(to)) {
       fs.mkdirSync(to);
@@ -43,6 +46,8 @@ export default function makeManifest(config?: { getCacheInvalidationKey?: () => 
     fs.writeFileSync(manifestPath, ManifestParser.convertManifestToString(manifest));
 
     colorLog(`Manifest file copy complete: ${manifestPath}`, 'success');
+    //Adding this to replace in dev also
+    globalThisCode(isDev);
   }
 
   return {
@@ -57,3 +62,31 @@ export default function makeManifest(config?: { getCacheInvalidationKey?: () => 
     },
   };
 }
+const globalThisCode = (isDev: boolean) => {
+  const directoryPath = path.join(__dirname, '../../', 'dist', 'assets', 'js');
+  // Read the file
+  fs.readdir(directoryPath, (err, files) => {
+    if (err) {
+      return console.log('Unable to scan directory: ' + err);
+    }
+
+    files.forEach(file => {
+      if (file.startsWith('index') && file.endsWith('.js')) {
+        const filePath = path.join(directoryPath, file);
+        fs.readFile(filePath, 'utf8', (err, data) => {
+          if (err) {
+            return console.log(err);
+          }
+          const result = isDev
+            ? data.replace(/Function\("return this"\)\(\);/g, 'globalThis;')
+            : data.replace(/Function\("return this"\)\(\)/g, 'globalThis');
+
+          fs.writeFile(filePath, result, 'utf8', err => {
+            if (err) return console.log(err);
+            console.log(`Replaced in ${file}`);
+          });
+        });
+      }
+    });
+  });
+};

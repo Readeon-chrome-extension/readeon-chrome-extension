@@ -409,6 +409,43 @@
   padding: 1.5rem 0px;
 }
 
+.post-view-row {
+  h3 {
+    margin: 0;
+  }
+
+  display: block
+}
+
+.post-icon-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.overlay-wrapper {
+  width: 95%;
+  /* Default width for mobile view */
+  margin: 0 auto;
+  /* Optional: Center the content */
+}
+
+@media (min-width: 768px) {
+
+  /* For larger devices, starting from 768px (e.g., tablets and up) */
+  .overlay-wrapper {
+    width: 80%;
+  }
+
+  .post-view-row {
+    display: inline-flex
+  }
+
+  .post-icon-wrapper {
+    margin-bottom: 0;
+  }
+}
+
 .full-screen__navigation-left:hover {
   visibility: visible;
   opacity: 1 !important;
