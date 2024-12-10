@@ -654,7 +654,7 @@ const FullScreen: FC<FullScreenProps> = ({
             </span>
           </LoadingOverlay>
         ) : (
-          <WarningContainer text="Readeon does not support Full Screen for this post at this time." />
+          <WarningContainer text="Readeon was not able to get post details. Please exit this full screen, scroll all the way down the page, and then scroll back up and try using the Full Screen button again." />
         )}
       </ReactModal>
       {isModalOpen && (
