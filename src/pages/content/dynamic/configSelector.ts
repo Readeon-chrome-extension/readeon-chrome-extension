@@ -19,17 +19,21 @@ const getRootSelectorValue = () => {
     return '[data-tag="all-posts-layout"]';
   } else {
     // Select all matching elements without the dynamic class
-    const elements = document.querySelectorAll('div[spacing="separated"][data-cardlayout-edgeless]');
+    // const elements = document.querySelectorAll(
+    //   'div[spacing="separated"][data-cardlayout-edgeless]:has([data-tag="post-card"])',
+    // );
+    // console.log('elements', { elements });
 
-    if (elements.length > 0) {
-      // Return a selector that targets the first matching element
-      // Using :first-of-type assumes that the desired element is the first of its type among siblings
-      // Adjust the pseudo-class if the DOM structure differs
-      return 'div[spacing="separated"][data-cardlayout-edgeless]:first-of-type';
-    } else {
-      // Fallback selector if no elements are found
-      return 'div[spacing="separated"][data-cardlayout-edgeless]';
-    }
+    // if (elements.length > 0) {
+    //   // Return a selector that targets the first matching element
+    //   // Using :first-of-type assumes that the desired element is the first of its type among siblings
+    //   // Adjust the pseudo-class if the DOM structure differs
+    //   return 'div[spacing="separated"][data-cardlayout-edgeless]:first-of-type';
+    // } else {
+
+    // :has Allows directly selecting elements that contain a child matching the condition
+    return 'div[spacing="separated"][data-cardlayout-edgeless]:has([data-tag="post-card"])';
+    // }
   }
 };
 const getPostRootSelector = () => {
@@ -38,17 +42,18 @@ const getPostRootSelector = () => {
   if (isCreatorPublicPage || isUnjoinedAuthorPage) {
     return '[data-tag="all-posts-layout"] > div';
   } else {
-    // Select all matching elements without the dynamic class
-    const elements = document.querySelectorAll('div[spacing="separated"][data-cardlayout-edgeless] > div');
+    // // Select all matching elements without the dynamic class
+    // const elements = document.querySelectorAll('div[spacing="separated"][data-cardlayout-edgeless] > div');
 
-    if (elements.length > 0) {
-      // Return a selector that targets the first matching child div
-      return 'div[spacing="separated"][data-cardlayout-edgeless] > div:first-of-type';
-    } else {
-      // Fallback selector if no elements are found
-      return 'div[spacing="separated"][data-cardlayout-edgeless] > div';
-    }
+    // if (elements.length > 0) {
+    //   // Return a selector that targets the first matching child div
+    //   return 'div[spacing="separated"][data-cardlayout-edgeless] > div:first-of-type';
+    // } else {
+
+    // :has Allows directly selecting elements that contain a child matching the condition
+    return 'div[spacing="separated"][data-cardlayout-edgeless]:has([data-tag="post-card"])';
   }
+  // }
 };
 const getLoadMoreSelector = () => {
   const isCreatorPublicPage = document && document?.querySelector(creatorPublicPage);

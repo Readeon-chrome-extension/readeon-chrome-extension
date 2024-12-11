@@ -248,15 +248,12 @@ refreshOnUpdate('pages/content');
       targetElement?.setAttribute('style', 'display: none');
       removeSubscriptionNode();
       targetElement?.nextElementSibling.setAttribute('style', 'display:none');
-    } else {
-      if (targetElement?.parentElement && !targetElement?.parentElement?.parentElement?.contains(root)) {
-        targetElement?.parentElement?.insertAdjacentElement('beforebegin', root);
-        console.log('targetElement', { targetElement });
+    } else if (targetElement?.parentElement && !targetElement?.parentElement?.parentElement?.contains(root)) {
+      targetElement?.parentElement?.insertAdjacentElement('beforebegin', root);
 
-        // Hide the original element
-        removeSubscriptionNode();
-        targetElement?.parentElement?.setAttribute('style', 'display: none');
-      }
+      // Hide the original element
+      removeSubscriptionNode();
+      targetElement?.parentElement?.setAttribute('style', 'display: none');
     }
 
     if (!rootIntoShadow.innerHTML) {
@@ -331,7 +328,9 @@ refreshOnUpdate('pages/content');
       }
     }
   });
-  reportIssuePatreon();
+  setTimeout(() => {
+    reportIssuePatreon();
+  }, 1000);
   //* this function runs one time and inject the buttons into the sidebar
   injectButtonListener();
 

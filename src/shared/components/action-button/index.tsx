@@ -538,7 +538,11 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
             data-tooltip-id="select-text-tooltip"
             onClick={() => handleTextLinkClick()}
             data-tooltip-content={
-              (isHasClicked || showCheckboxes) && isReadeonView ? 'Click to turn off Download feature' : ''
+              isInValidAuthor
+                ? 'Readeon cannot download posts for this creator due to Patreon restrictions.'
+                : (isHasClicked || showCheckboxes) && isReadeonView
+                  ? 'Click to turn off Download feature'
+                  : ''
             }>
             {isHasClicked || showCheckboxes
               ? view === 'recent-view'
