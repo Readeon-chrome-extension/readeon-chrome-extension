@@ -327,7 +327,9 @@ refreshOnUpdate('pages/content');
       }
     }
   });
-  reportIssuePatreon();
+  setTimeout(() => {
+    reportIssuePatreon();
+  }, 1000);
   //* this function runs one time and inject the buttons into the sidebar
   injectButtonListener();
 
