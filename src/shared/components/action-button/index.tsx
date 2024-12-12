@@ -474,8 +474,10 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
 
   const combinedStyles = isReadeonView ? { ...baseStyles, ...selectAllCheckboxTextStyles } : baseStyles;
 
+  const pathname = window.location.pathname;
+
   const handleTextLinkClick = () => {
-    if (isReadeonView) {
+    if (isReadeonView && !pathname.startsWith('/c/user/posts')) {
       downloadFeatureToggleStorage
         .setHasClicked(authorKey?.toLowerCase(), view, !hasClicked[getStorageKey(authorKey?.toLowerCase(), view)])
         .then();
@@ -494,7 +496,7 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
       console.log('error', { error });
     }
   };
-  const isInValidAuthor = useMemo(() => !window?.location?.href.startsWith('https://www.patreon.com/user'), []);
+
   return (
     <>
       <FlexContainer>
@@ -524,7 +526,7 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
                 disabled={allLocked}
                 data-tooltip-id="all-post-selection"
                 data-tooltip-content={
-                  isInValidAuthor
+                  pathname.startsWith('/c/user/posts')
                     ? 'Readeon cannot download posts for this creator due to Patreon restrictions.'
                     : allLocked
                       ? 'All currently loaded posts on the page are locked and cannot be selected.'
@@ -538,7 +540,7 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
             data-tooltip-id="select-text-tooltip"
             onClick={() => handleTextLinkClick()}
             data-tooltip-content={
-              isInValidAuthor
+              pathname.startsWith('/c/user/posts')
                 ? 'Readeon cannot download posts for this creator due to Patreon restrictions.'
                 : (isHasClicked || showCheckboxes) && isReadeonView
                   ? 'Click to turn off Download feature'
