@@ -503,7 +503,8 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
             textOverflow: 'ellipsis',
             overflow: 'hidden',
           }}>
-          {(isReadeonView && isHasClicked) || !isReadeonView || showCheckboxes ? (
+          {((isReadeonView && isHasClicked) || !isReadeonView || showCheckboxes) &&
+          !pathname.startsWith('/c/user/posts') ? (
             <div style={{ display: 'flex' }}>
               <input
                 style={{
@@ -539,7 +540,7 @@ const PostSelectionActionButton: React.FC<PostSelectionActionType> = ({
                   ? 'Click to turn off Download feature'
                   : ''
             }>
-            {isHasClicked || showCheckboxes
+            {(isHasClicked || showCheckboxes) && !pathname.startsWith('/c/user/posts')
               ? view === 'recent-view'
                 ? `Select Posts to Download from ${authorName?.user?.attributes?.name || ''}`
                 : 'Select Posts to Download'
