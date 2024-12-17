@@ -51,7 +51,7 @@ const getPostRootSelector = () => {
     // } else {
 
     // :has Allows directly selecting elements that contain a child matching the condition
-    return 'div[spacing="separated"][data-cardlayout-edgeless]:has([data-tag="post-card"])';
+    return 'div[spacing="separated"][data-cardlayout-edgeless]:has([data-tag="post-card"]) > div';
   }
   // }
 };
