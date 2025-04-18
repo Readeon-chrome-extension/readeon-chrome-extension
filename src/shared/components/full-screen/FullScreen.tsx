@@ -99,7 +99,7 @@ const FullScreen: FC<FullScreenProps> = ({
 
   const customStyles = {
     overlay: {
-      zIndex: '1198',
+      zIndex: '20000',
       backgroundColor: textStyles?.backgroundColor,
       overflowY: 'auto',
       overflowX: 'hidden',
